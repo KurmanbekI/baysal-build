@@ -51,7 +51,7 @@ export default async function EmployeePage({
         Добавить новую задачу сотруднику:
       </h2>
       {/* Замените "REPLACE_WITH_VALID_PROJECT_ID" на реальный ID существующего проекта */}
-      <AddTaskForm employeeId={employee.id} projectId="REPLACE_WITH_VALID_PROJECT_ID" />
+      <AddTaskForm employeeId={employee.id} projectId="cm8cu2tsw0006may16woqnham" />
     </div>
   );
 }

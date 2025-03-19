@@ -67,3 +67,12 @@ model User {
   role         String   @default("employee")
   createdAt    DateTime @default(now())
 }
+model StockItem {
+  id          String   @id @default(cuid())
+  name        String
+  category    String
+  quantity    Int
+  unit        String
+  description String?
+  createdAt   DateTime @default(now())
+}

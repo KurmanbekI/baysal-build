@@ -5,19 +5,24 @@ const prisma = new PrismaClient();
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } | Promise<{ id: string }> }
+  context: { params: { id: string } }
 ) {
-  const { id } = await params; // ✅ исправляем params ошибку
+  const { id } = await context.params; // ✅ Теперь мы корректно ждём params!
 
-  const existingItem = await prisma.stockItem.findUnique({ where: { id } });
+  const existingItem = await prisma.stockItem.findUnique({
+    where: { id },
+  });
 
   if (!existingItem) {
-    return NextResponse.json({ message: 'Материал уже удалён!' }, { status: 404 });
+    return NextResponse.json(
+      { message: 'Материал уже удалён или не существует!' },
+      { status: 404 }
+    );
   }
 
   await prisma.stockItem.delete({
     where: { id },
   });
 
-  return NextResponse.json({ message: 'Материал удалён успешно' });
+  return NextResponse.json({ message: 'Материал успешно удалён' });
 }

@@ -3,13 +3,14 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function AddTaskForm({ employeeId, projectId }) {
+export default function AddTaskForm({ employeeId }) {
   const router = useRouter();
 
   const [formData, setFormData] = useState({
     title: '',
-    startDate: '',
-    dueDate: '',
+    description: '',
+    priority: 'normal',
+    status: 'new',
   });
 
   const handleChange = (e) => {
@@ -23,11 +24,8 @@ export default function AddTaskForm({ employeeId, projectId }) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        title: formData.title,
-        startDate: formData.startDate,
-        dueDate: formData.dueDate,
-        employeeId,
-        projectId,
+        ...formData,
+        assignee: employeeId, // ✅ Привязываем задачу к сотруднику
       }),
     });
 
@@ -35,27 +33,39 @@ export default function AddTaskForm({ employeeId, projectId }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="bg-gray-100 p-4 rounded-md shadow-md">
+      <h2 className="text-lg font-semibold mb-2">➕ Добавить задание</h2>
+
       <input
         name="title"
-        type="text"
-        placeholder="Название задачи"
+        placeholder="Название задания"
+        className="border p-2 rounded-md w-full mb-2"
         onChange={handleChange}
         required
       />
-      <input
-        name="startDate"
-        type="date"
+
+      <textarea
+        name="description"
+        placeholder="Описание"
+        className="border p-2 rounded-md w-full mb-2"
         onChange={handleChange}
         required
       />
-      <input
-        name="dueDate"
-        type="date"
+
+      <select
+        name="priority"
+        className="border p-2 rounded-md w-full mb-2"
         onChange={handleChange}
         required
-      />
-      <button type="submit">Создать задачу</button>
+      >
+        <option value="normal">⚪ Обычный</option>
+        <option value="high">🔴 Высокий</option>
+        <option value="urgent">🔥 Срочный</option>
+      </select>
+
+      <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+        ➕ Добавить
+      </button>
     </form>
   );
 }

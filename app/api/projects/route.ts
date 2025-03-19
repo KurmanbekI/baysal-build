@@ -1,19 +1,35 @@
-import { PrismaClient } from "@prisma/client";
-import { NextRequest, NextResponse } from "next/server";
+import { PrismaClient } from '@prisma/client';
+import { NextRequest, NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
+// 📌 Получение всех проектов
 export async function GET() {
-  const projects = await prisma.project.findMany();
-  return NextResponse.json(projects);
+  try {
+    const projects = await prisma.project.findMany();
+    return NextResponse.json(projects);
+  } catch (error) {
+    return NextResponse.json({ error: 'Ошибка загрузки проектов' }, { status: 500 });
+  }
 }
 
+// 📌 Создание нового проекта
 export async function POST(request: NextRequest) {
-  const { title, description, priority, deadline } = await request.json();
+  try {
+    const { title, description, startDate, endDate, status } = await request.json();
 
-  const project = await prisma.project.create({
-    data: { title, description, priority, deadline: new Date(deadline), status: "new" },
-  });
+    const newProject = await prisma.project.create({
+      data: {
+        title,
+        description,
+        startDate: new Date(startDate),
+        endDate: endDate ? new Date(endDate) : null,
+        status,
+      },
+    });
 
-  return NextResponse.json(project);
+    return NextResponse.json(newProject, { status: 201 });
+  } catch (error) {
+    return NextResponse.json({ error: 'Ошибка при создании проекта' }, { status: 500 });
+  }
 }

@@ -14,12 +14,41 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <aside className="w-64 min-h-screen bg-gray-800 text-white p-4">
           <nav>
             <ul>
-              <li><a href="/dashboard">Панель управления</a></li>
-              <li><a href="/employees">Сотрудники</a></li>
-              <li><a href="/projects">Проекты</a></li>
-              <li><a href="/stock">Склад</a></li>
-              <li><a href="/reports">Отчёты</a></li>
-              <li><a href="/admin">Админ-панель</a></li>
+            <li>
+            <Link href="/dashboard" className="flex items-center p-2 rounded-md hover:bg-gray-700">
+              🏠 Панель управления
+            </Link>
+          </li>
+          <li>
+            <Link href="/employees" className="flex items-center p-2 rounded-md hover:bg-gray-700">
+              👥 Сотрудники
+            </Link>
+          </li>
+          <li>
+            <Link href="/projects" className="flex items-center p-2 rounded-md hover:bg-gray-700">
+              🏗 Проекты
+            </Link>
+          </li>
+          <li>
+            <Link href="/stock" className="flex items-center p-2 rounded-md hover:bg-gray-700">
+              📦 Склад
+            </Link>
+          </li>
+          <li>
+            <Link href="/reports" className="flex items-center p-2 rounded-md hover:bg-gray-700">
+              📊 Отчёты
+            </Link>
+          </li>
+          <li>
+            <Link href="/admin" className="flex items-center p-2 rounded-md hover:bg-gray-700">
+              ⚙️ Админ-панель
+            </Link>
+          </li>
+          <li>
+            <Link href="/tasks" className="flex items-center p-2 rounded-md hover:bg-gray-700">
+              📝 Задания
+            </Link>
+          </li>
             </ul>
           </nav>
         </aside>

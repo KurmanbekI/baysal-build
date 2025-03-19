@@ -1,18 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
-export async function POST(request: NextRequest) {
-  const { name, role, experience } = await request.json();
-
-  const employee = await prisma.employee.create({
-    data: {
-      name,
-      role,
-      experience,
-    },
-  });
-
-  return NextResponse.json(employee);
+// 📌 GET: Получение списка сотрудников
+export async function GET() {
+  try {
+    const employees = await prisma.employee.findMany();
+    return NextResponse.json(employees);
+  } catch (error) {
+    return NextResponse.json({ error: 'Ошибка загрузки сотрудников' }, { status: 500 });
+  }
 }
